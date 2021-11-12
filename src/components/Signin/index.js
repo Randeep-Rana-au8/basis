@@ -87,11 +87,16 @@ export const SignUp = () => {
   const [refer, setRefer] = useState("");
   const userVerify = useSelector((state) => state.userVerify);
   const userStart = useSelector((state) => state.userStart);
+  const userSignup = useSelector((state) => state.userSignup);
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
     if (!userVerify?.userDetails) {
       history.push("/start");
+    }
+
+    if (userSignup?.userDetails) {
+      history.push("/profile");
     }
 
     if (userVerify?.userDetails) {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   Container,
   Icon,
@@ -11,7 +10,7 @@ import {
   FormLabel,
   FormWrap,
 } from "./StartElements";
-import axios from "axios";
+
 import { start } from "../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,7 +18,7 @@ const Start = ({ history }) => {
   const [email, setEmail] = useState("");
   const [data, setData] = useState("");
   const [message, setMessage] = useState("");
-  //   const history = useHistory();
+
   const dispatch = useDispatch();
   const userStart = useSelector((state) => state.userStart);
 
@@ -32,18 +31,6 @@ const Start = ({ history }) => {
     console.log(userStart);
     console.log("I am not here");
     dispatch(start(email));
-
-    // setMessage("");
-    // const res = await axios.post("https://hiring.getbasis.co/candidate/users/email", {
-    //   email: e.target.email.value,
-    // });
-    // console.log(res);
-    // if (res?.data?.success === true) {
-    //   setMessage("Success!");
-    // } else {
-    //   setMessage("Failed Please Try Again!");
-    // }
-    // setData(res?.data?.results?.token);
   };
 
   useEffect(() => {
@@ -54,7 +41,7 @@ const Start = ({ history }) => {
       setEmail(userStart?.userInfo?.email);
       setTimeout(() => {
         history.push("/signin");
-      }, 1000);
+      }, 500);
     }
   }, [data, userStart]);
 

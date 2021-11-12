@@ -14,26 +14,38 @@ import {
   FormInput,
   FormLabel,
   FormWrap,
-  Text,
+  DisplayImage,
 } from "./ProfileElements";
 
 export const Profile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
+  const [img, setImg] = useState("");
 
   const history = useHistory();
 
   const userVerify = useSelector((state) => state.userVerify);
+  const userSignup = useSelector((state) => state.userSignup);
 
   useEffect(() => {
     if (!userVerify?.userDetails) {
       history.push("/");
     }
-    setName(userVerify?.userDetails?.user?.firstName);
-    setEmail(userVerify?.userDetails?.user?.email);
-    setNumber(userVerify?.userDetails?.user?.phoneNumber);
-  }, [userVerify]);
+    if (userVerify?.userDetails) {
+      setName(userVerify?.userDetails?.user?.firstName);
+      setEmail(userVerify?.userDetails?.user?.email);
+      setNumber(userVerify?.userDetails?.user?.phoneNumber);
+      setImg(userVerify?.userDetails?.user?.avatar);
+    }
+
+    if (userSignup?.userDetails) {
+      setName(userSignup?.userDetails?.user?.firstName);
+      setEmail(userSignup?.userDetails?.user?.email);
+      setNumber(userSignup?.userDetails?.user?.phoneNumber);
+      setImg(userSignup?.userDetails?.user?.avatar);
+    }
+  }, [userVerify, userSignup]);
 
   return (
     <Container>
@@ -42,6 +54,7 @@ export const Profile = () => {
         <FormContent>
           <Form action="#">
             <FormH1>Welcome to your profile</FormH1>
+            <DisplayImage src={img} />
             <FormLabel htmlFor="for">Name</FormLabel>
             <FormInput type="name" value={name} readOnly placeholder="Enter Your Name" required />
             <FormLabel htmlFor="for">Email</FormLabel>

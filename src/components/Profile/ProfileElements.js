@@ -2,14 +2,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-  min-height: 692px;
+  /* min-height: 692px; */
+  overflow-y: scroll;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
   z-index: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   background: linear-gradient(108deg, rgba(1, 147, 86, 1) 0%, rgba(10, 201, 122, 1) 100%);
 `;
 
@@ -53,14 +54,16 @@ export const FormContent = styled.div`
 export const Form = styled.form`
   background: #010101;
   max-width: 400px;
-  height: auto;
+  /* height: auto; */
   width: 100%;
   z-index: 1;
   display: grid;
   margin: 0 auto;
-  padding: 80px 32px;
+  padding: 20px 32px;
+
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  margin-bottom: 50px;
 
   @media screen and (max-width: 400px) {
     padding: 32px 32px;
@@ -100,4 +103,12 @@ export const Text = styled.span`
   margin-top: 24px;
   color: #fff;
   font-size: 14px;
+`;
+
+export const DisplayImage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  text-align: center;
+  margin: 0 auto;
 `;
