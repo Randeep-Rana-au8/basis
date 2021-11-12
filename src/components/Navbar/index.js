@@ -15,7 +15,7 @@ const Navbar = ({ toggle }) => {
               <FaBars />
             </MobileIcon>
             <NavBtn>
-              <NavBtnLink to="/signin">Sign In</NavBtnLink>
+              <NavBtnLink to="/start">Get Started</NavBtnLink>
             </NavBtn>
           </NavbarContainer>
         </Nav>
