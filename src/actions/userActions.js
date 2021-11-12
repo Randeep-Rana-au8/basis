@@ -18,7 +18,7 @@ export const start = (email) => async (dispatch) => {
     };
 
     const res = await axios.post("https://hiring.getbasis.co/candidate/users/email", {
-      email: email,
+      email,
     });
     console.log(res);
     console.log("i am here");
@@ -26,10 +26,13 @@ export const start = (email) => async (dispatch) => {
       type: USER_START,
       payload: res?.data?.results,
       message: res?.data?.results?.success && "Success!",
-      email: email,
+      email,
     });
 
-    localStorage.setItem("userStart", JSON.stringify(res?.data?.results));
+    localStorage.setItem(
+      "userStart",
+      JSON.stringify({ userInfo: { email, ...res?.data?.results } })
+    );
   } catch (error) {
     console.log(error);
     dispatch({
@@ -65,13 +68,16 @@ export const verify = (email, token, code) => async (dispatch) => {
       email: email,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(res?.data?.results));
+    localStorage.setItem(
+      "userVerify",
+      JSON.stringify({ userDetails: { email, ...res?.data?.results } })
+    );
   } catch (error) {
     console.log(error);
     dispatch({
       type: USER__VERIFY_MESSAGE,
       payload: {},
-      email: email,
+
       //   message: "Failed, Please Try Again!",
       message:
         error.response && error.response.data.message ? error.response.data.message : error.message,
@@ -104,7 +110,10 @@ export const signup = (email, firstName, privacyPolicy, token, refer) => async (
       email: email,
     });
 
-    localStorage.setItem("userSignup", JSON.stringify(res?.data?.results));
+    localStorage.setItem(
+      "userSignup",
+      JSON.stringify({ userDetails: { email, ...res?.data?.results } })
+    );
   } catch (error) {
     console.log(error);
     dispatch({
@@ -119,6 +128,9 @@ export const signup = (email, firstName, privacyPolicy, token, refer) => async (
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  localStorage.removeItem("userInfo");
+  localStorage.removeItem("userVerify");
+  localStorage.removeItem("userSignup");
+  localStorage.removeItem("userStart");
 };

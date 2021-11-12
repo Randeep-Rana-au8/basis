@@ -21,6 +21,7 @@ import {
 
 const SignIn = () => {
   const [value, setValue] = useState("");
+  const [message, setMessage] = useState("");
   const [OTP, setOTP] = useState(112233);
   const userStart = useSelector((state) => state.userStart);
   const userVerify = useSelector((state) => state.userVerify);
@@ -37,6 +38,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMessage("");
     console.log(value, userStart?.userInfo?.token, OTP);
     dispatch(verify(value, userStart?.userInfo?.token, OTP));
   };
@@ -46,12 +48,14 @@ const SignIn = () => {
       history.push("/start");
     }
 
-    if (userVerify?.userDetails) {
+    if (userVerify?.userDetails?.email) {
       if (userVerify?.userDetails?.isLogin) {
         history.push("/profile");
       } else {
         history.push("/register");
       }
+    } else {
+      setMessage(userVerify?.userDetails?.message);
     }
   }, [userStart, userVerify]);
 
@@ -62,6 +66,8 @@ const SignIn = () => {
         <FormContent>
           <Form action="#" onSubmit={handleSubmit}>
             <FormH1>Sign in to your account</FormH1>
+
+            <Text style={{ color: "red" }}>{message}</Text>
             <FormLabel htmlFor="for">Email</FormLabel>
             <FormInput type="email" value={value} readOnly required />
             <FormLabel htmlFor="for">Verification Code</FormLabel>
@@ -103,7 +109,7 @@ export const SignUp = () => {
       // setName(userVerify?.userDetails?.user?.firstName);
       setEmail(userVerify?.userDetails?.email);
     }
-  }, [userVerify]);
+  }, [userVerify, userSignup]);
 
   const handleNameChange = (e) => {
     setName(e.target.value);

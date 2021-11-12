@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { verify } from "../../actions/userActions";
+import { logout } from "../../actions/userActions";
 
 import {
   Container,
@@ -24,6 +24,7 @@ export const Profile = () => {
   const [img, setImg] = useState("");
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const userVerify = useSelector((state) => state.userVerify);
   const userSignup = useSelector((state) => state.userSignup);
@@ -32,7 +33,7 @@ export const Profile = () => {
     if (!userVerify?.userDetails) {
       history.push("/");
     }
-    if (userVerify?.userDetails) {
+    if (userVerify?.userDetails?.user) {
       setName(userVerify?.userDetails?.user?.firstName);
       setEmail(userVerify?.userDetails?.user?.email);
       setNumber(userVerify?.userDetails?.user?.phoneNumber);
@@ -46,6 +47,11 @@ export const Profile = () => {
       setImg(userSignup?.userDetails?.user?.avatar);
     }
   }, [userVerify, userSignup]);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
 
   return (
     <Container>
@@ -73,7 +79,9 @@ export const Profile = () => {
               placeholder="Enter Phone Number"
               required
             />
-            <FormButton type="submit">LOGOUT</FormButton>
+            <FormButton type="submit" onClick={handleLogout}>
+              LOGOUT
+            </FormButton>
             {/* <Text>
               Already have a account?{" "}
               <Link to="/signin" style={{ color: "#01bf71" }}>
