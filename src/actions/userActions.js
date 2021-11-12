@@ -5,6 +5,8 @@ import {
   USER_MESSAGE,
   USER_VERIFY,
   USER__VERIFY_MESSAGE,
+  USER_SIGNUP,
+  USER__SIGNUP_MESSAGE,
 } from "../constants/userConstant";
 
 export const start = (email) => async (dispatch) => {
@@ -68,6 +70,45 @@ export const verify = (email, token, code) => async (dispatch) => {
     console.log(error);
     dispatch({
       type: USER__VERIFY_MESSAGE,
+      payload: {},
+      email: email,
+      //   message: "Failed, Please Try Again!",
+      message:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const signup = (email, firstName, privacyPolicy, token, refer) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const res = await axios.post("https://hiring.getbasis.co/candidate/users", {
+      firstName: firstName,
+      email: email,
+      referredCodeKey: refer,
+      agreeToPrivacyPolicy: privacyPolicy,
+      token: token,
+      source: "WEB_APP",
+    });
+    console.log(res);
+    console.log("i am here");
+    dispatch({
+      type: USER_SIGNUP,
+      payload: res?.data?.results,
+      message: res?.data?.results?.success && "Success!",
+      email: email,
+    });
+
+    localStorage.setItem("userSignup", JSON.stringify(res?.data?.results));
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: USER__SIGNUP_MESSAGE,
       payload: {},
       email: email,
       //   message: "Failed, Please Try Again!",

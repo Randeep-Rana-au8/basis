@@ -101,15 +101,3 @@ export const Text = styled.span`
   color: #fff;
   font-size: 14px;
 `;
-
-export const RadioInput = styled.input`
-  /* border: none; */
-  /* border-radius: 4px; */
-`;
-
-export const RadioContainer = styled.div`
-  display: flex;
-  align-items: center;
-  text-align: start;
-  margin-bottom: 10px;
-`;
