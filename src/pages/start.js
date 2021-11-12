@@ -1,10 +1,10 @@
 import React from "react";
 import Start from "../components/Start";
 
-const StartPage = () => {
+const StartPage = ({ history }) => {
   return (
     <div>
-      <Start />
+      <Start history={history} />
     </div>
   );
 };
