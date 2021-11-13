@@ -10,3 +10,4 @@ Live Link [getBasis](https://getbasis.netlify.app/).
 ### React-Router-DOM
 ### Axios
 
+[![N|Solid](https://res.cloudinary.com/ranacloud/image/upload/v1636787251/new/Screenshot_229_ezcygn.png)]
