@@ -1,6 +1,6 @@
 # Getting Started with getBasis Documentation
 
-Live Link [getBasis](https://romantic-noyce-cb3cd1.netlify.app/).
+Live Link [getBasis](https://getbasis.netlify.app/).
 
 ## Technologies and NPM Package
 
