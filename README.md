@@ -1,6 +1,4 @@
-# Dillinger
-## _The Last Markdown Editor, Ever_
-# Getting Started with getBasis Documentation
+# Welcome To Basis Documentation
 
 ##### Live Link [getBasis](https://getbasis.netlify.app/).
 
