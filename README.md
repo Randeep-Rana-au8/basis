@@ -1,6 +1,7 @@
 # Welcome To Basis Documentation
 
 ##### Live Link [getBasis](https://getbasis.netlify.app/).
+##### Loom Video Link [Recording](https://www.loom.com/share/60fe8c0d71414470a79d9fc5a014f10f).
 
 ### Technologies and NPM Package
 
