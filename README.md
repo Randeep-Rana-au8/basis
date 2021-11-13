@@ -8,4 +8,5 @@ Live Link [getBasis](https://getbasis.netlify.app/).
 ### Redux
 ### Styled-Components
 ### React-Router-DOM
+### Axios
 
