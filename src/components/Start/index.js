@@ -28,13 +28,11 @@ const Start = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(userStart);
-    console.log("I am not here");
+
     dispatch(start(email));
   };
 
   useEffect(() => {
-    console.log(userStart);
     setMessage("");
     if (userStart?.userInfo?.email) {
       setMessage("Success!");

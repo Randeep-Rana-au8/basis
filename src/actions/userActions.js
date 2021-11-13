@@ -20,8 +20,6 @@ export const start = (email) => async (dispatch) => {
     const res = await axios.post("https://hiring.getbasis.co/candidate/users/email", {
       email,
     });
-    console.log(res);
-    console.log("i am here");
     dispatch({
       type: USER_START,
       payload: res?.data?.results,
@@ -34,7 +32,6 @@ export const start = (email) => async (dispatch) => {
       JSON.stringify({ userInfo: { email, ...res?.data?.results } })
     );
   } catch (error) {
-    console.log(error);
     dispatch({
       type: USER_MESSAGE,
       payload: {},
@@ -59,8 +56,7 @@ export const verify = (email, token, code) => async (dispatch) => {
       token: `${token}`,
       verificationCode: `${code}`,
     });
-    console.log(res);
-    console.log("i am here");
+
     dispatch({
       type: USER_VERIFY,
       payload: res?.data?.results,
@@ -73,61 +69,101 @@ export const verify = (email, token, code) => async (dispatch) => {
       JSON.stringify({ userDetails: { email, ...res?.data?.results } })
     );
   } catch (error) {
-    console.log(error);
     dispatch({
       type: USER__VERIFY_MESSAGE,
       payload: {},
 
-      //   message: "Failed, Please Try Again!",
       message:
         error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };
 
-export const signup = (email, firstName, privacyPolicy, token, refer) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+export const signup =
+  (email, firstName, privacyPolicy, token, refer, setMsg) => async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      setMsg("");
 
-    const res = await axios.post("https://hiring.getbasis.co/candidate/users", {
-      firstName: firstName,
-      email: email,
-      referredCodeKey: refer,
-      agreeToPrivacyPolicy: privacyPolicy,
-      token: token,
-      source: "WEB_APP",
-    });
-    console.log(res);
-    console.log("i am here");
-    dispatch({
-      type: USER_SIGNUP,
-      payload: res?.data?.results,
-      message: res?.data?.results?.success && "Success!",
-      email: email,
-    });
+      if (refer) {
+        const result = await axios.get(
+          `https://hiring.getbasis.co/candidate/users/referral/${refer}`
+        );
 
-    localStorage.setItem(
-      "userSignup",
-      JSON.stringify({ userDetails: { email, ...res?.data?.results } })
-    );
-  } catch (error) {
-    console.log(error);
-    dispatch({
-      type: USER__SIGNUP_MESSAGE,
-      payload: {},
-      email: email,
-      //   message: "Failed, Please Try Again!",
-      message:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
-    });
-  }
-};
+        if (result?.data?.success) {
+          const res = await axios.post("https://hiring.getbasis.co/candidate/users", {
+            firstName: firstName,
+            email: email,
+            referredCodeKey: refer,
+            agreeToPrivacyPolicy: privacyPolicy,
+            token: token,
+            source: "WEB_APP",
+          });
 
-export const logout = () => (dispatch) => {
+          dispatch({
+            type: USER_SIGNUP,
+            payload: res?.data?.results,
+            message: res?.data?.results?.success && "Success!",
+            email: email,
+          });
+
+          localStorage.setItem(
+            "userSignup",
+            JSON.stringify({ userDetails: { email, ...res?.data?.results } })
+          );
+        } else {
+          setMsg(result?.data?.message);
+        }
+      } else {
+        const res = await axios.post("https://hiring.getbasis.co/candidate/users", {
+          firstName: firstName,
+          email: email,
+          referredCodeKey: refer,
+          agreeToPrivacyPolicy: privacyPolicy,
+          token: token,
+          source: "WEB_APP",
+        });
+
+        dispatch({
+          type: USER_SIGNUP,
+          payload: res?.data?.results,
+          message: res?.data?.results?.success && "Success!",
+          email: email,
+        });
+
+        localStorage.setItem(
+          "userSignup",
+          JSON.stringify({ userDetails: { email, ...res?.data?.results } })
+        );
+      }
+    } catch (error) {
+      dispatch({
+        type: USER__SIGNUP_MESSAGE,
+        payload: {},
+        email,
+        message:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const logout = (id, token) => async (dispatch) => {
+  const config = {
+    headers: { Authorization: `Bearer ${id},${token}` },
+  };
+
+  const res = await axios.delete(
+    `https://hiring.getbasis.co/candidate/users/logout/${id}`,
+
+    config
+  );
+
   dispatch({ type: USER_LOGOUT });
   localStorage.removeItem("userInfo");
   localStorage.removeItem("userVerify");

@@ -8,7 +8,7 @@ const index = () => {
         <Title style={{ color: "black" }}>Welcome To getBasis👋</Title>
         <Description>India's financial services destination for women!👩🏼‍🤝‍👩🏼</Description>
       </div>
-      <div>
+      {/* <div>
         <div>
           <h3>Explore More with Us</h3>
         </div>
@@ -16,7 +16,7 @@ const index = () => {
           <Input placeholder="Enter your email" />
           <Button>Submit</Button>
         </div>
-      </div>
+      </div> */}
     </HomeContainer>
   );
 };

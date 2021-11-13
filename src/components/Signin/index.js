@@ -39,7 +39,7 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setMessage("");
-    console.log(value, userStart?.userInfo?.token, OTP);
+
     dispatch(verify(value, userStart?.userInfo?.token, OTP));
   };
 
@@ -91,6 +91,7 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [agree, setAgree] = useState(false);
   const [refer, setRefer] = useState("");
+  const [msg, setMsg] = useState("");
   const userVerify = useSelector((state) => state.userVerify);
   const userStart = useSelector((state) => state.userStart);
   const userSignup = useSelector((state) => state.userSignup);
@@ -106,7 +107,6 @@ export const SignUp = () => {
     }
 
     if (userVerify?.userDetails) {
-      // setName(userVerify?.userDetails?.user?.firstName);
       setEmail(userVerify?.userDetails?.email);
     }
   }, [userVerify, userSignup]);
@@ -117,7 +117,7 @@ export const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signup(email, name, agree, userStart?.userInfo?.token, refer));
+    dispatch(signup(email, name, agree, userStart?.userInfo?.token, refer, setMsg));
   };
 
   return (
@@ -127,17 +127,20 @@ export const SignUp = () => {
         <FormContent>
           <Form action="#" onSubmit={handleSubmit}>
             <FormH1>Create A New Account</FormH1>
+
             <FormLabel htmlFor="for">Name</FormLabel>
             <FormInput value={name} onChange={handleNameChange} type="name" required />
             <FormLabel htmlFor="for">Email</FormLabel>
             <FormInput type="email" value={email} readOnly required />
             <FormLabel htmlFor="for">ReferredCodeKey</FormLabel>
+
             <FormInput
               type="text"
               value={refer}
               onChange={(e) => setRefer(e.target.value)}
               placeholder="optional"
             />
+            <span style={{ color: "red" }}>{msg}</span>
             <RadioContainer>
               <RadioInput required value={agree} onClick={() => setAgree(!agree)} type="checkbox" />
               <FormLabel style={{ margin: "3px" }} htmlFor="for">
@@ -145,12 +148,6 @@ export const SignUp = () => {
               </FormLabel>
             </RadioContainer>
             <FormButton type="submit">Continue</FormButton>
-            <Text>
-              Already have a account?{" "}
-              <Link to="/signin" style={{ color: "#01bf71" }}>
-                Login here
-              </Link>
-            </Text>
           </Form>
         </FormContent>
       </FormWrap>

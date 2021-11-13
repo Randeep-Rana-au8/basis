@@ -21,6 +21,8 @@ export const Profile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
+  const [id, setId] = useState("");
+  const [token, setToken] = useState("");
   const [img, setImg] = useState("");
 
   const history = useHistory();
@@ -28,6 +30,7 @@ export const Profile = () => {
 
   const userVerify = useSelector((state) => state.userVerify);
   const userSignup = useSelector((state) => state.userSignup);
+  const userStart = useSelector((state) => state.userStart);
 
   useEffect(() => {
     if (!userVerify?.userDetails) {
@@ -38,6 +41,8 @@ export const Profile = () => {
       setEmail(userVerify?.userDetails?.user?.email);
       setNumber(userVerify?.userDetails?.user?.phoneNumber);
       setImg(userVerify?.userDetails?.user?.avatar);
+      setId(userVerify?.userDetails?.user?._id);
+      setToken(userVerify?.userDetails?.user?.token);
     }
 
     if (userSignup?.userDetails) {
@@ -45,12 +50,15 @@ export const Profile = () => {
       setEmail(userSignup?.userDetails?.user?.email);
       setNumber(userSignup?.userDetails?.user?.phoneNumber);
       setImg(userSignup?.userDetails?.user?.avatar);
+      setId(userSignup?.userDetails?.user?._id);
+      setToken(userSignup?.userDetails?.user?.token);
     }
   }, [userVerify, userSignup]);
 
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout());
+
+    dispatch(logout(id, token));
   };
 
   return (
@@ -82,12 +90,6 @@ export const Profile = () => {
             <FormButton type="submit" onClick={handleLogout}>
               LOGOUT
             </FormButton>
-            {/* <Text>
-              Already have a account?{" "}
-              <Link to="/signin" style={{ color: "#01bf71" }}>
-                Login here
-              </Link>
-            </Text> */}
           </Form>
         </FormContent>
       </FormWrap>
