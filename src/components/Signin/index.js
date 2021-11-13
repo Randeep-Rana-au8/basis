@@ -65,7 +65,7 @@ const SignIn = () => {
         <Icon to="/">getBasis</Icon>
         <FormContent>
           <Form action="#" onSubmit={handleSubmit}>
-            <FormH1>Sign in to your account</FormH1>
+            <FormH1>Verify Your Account</FormH1>
 
             <Text style={{ color: "red" }}>{message}</Text>
             <FormLabel htmlFor="for">Email</FormLabel>
@@ -73,12 +73,6 @@ const SignIn = () => {
             <FormLabel htmlFor="for">Verification Code</FormLabel>
             <FormInput type="number" value={OTP} onChange={handleOTP} required />
             <FormButton type="submit">Continue</FormButton>
-            <Text>
-              New user?{" "}
-              <Link to="/register" style={{ color: "#01bf71" }}>
-                Register Here
-              </Link>
-            </Text>
           </Form>
         </FormContent>
       </FormWrap>
